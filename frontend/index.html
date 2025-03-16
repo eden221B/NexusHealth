@@ -1,87 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Assistance System</title>
+    <title>Nexus Health</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="../public/icon/favicon.ico" type="image/x-icon">
-
 </head>
 <body>
     <header>
-        <h1>Medical Assistance System</h1>
         <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="breast_cancer.html">Breast Cancer Prediction</a></li>
-                <li><a href="about.html">About</a></li>
+            <div class="logo">Nexus Health</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
+            <a href="login.html"><button class="sign-in">Sign In</button></a>
         </nav>
-    </header>
+    </header>    
 
-    <main>
-        <!-- Home Page -->
-        <section id="home" class="tab active">
-            <h2>Welcome to Medical Assistance</h2>
-            <p>Select a health prediction service from the menu.</p>
-        </section>
-
-        <!-- Breast Cancer Prediction -->
-        <section id="breast-cancer" class="tab">
-            <h2>Breast Cancer Risk Assessment</h2>
-            <form id="breastCancerForm">
-                <div class="form-group">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" required>
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Empowering
+                Wellness with
+                Smart Prediction</h1>
+            <p>With innovative health assessments
+                and data-driven insights, we help you
+                stay informed and take proactive
+                steps toward better well-being.</p>
+            <button class="cta">Get Started</button>
+            <div class="stats">
+                <div>
+                    <strong>#1</strong>
+                    <span>Data-Driven Health Insights</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="bmi">BMI:</label>
-                    <input type="number" id="bmi" step="0.1" required>
+                <div>
+                    <strong>1000+</strong>
+                    <span>Risk Assessments Complete</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="family_history">Family History of Breast Cancer?</label>
-                    <select id="family_history">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
+                <div>
+                    <strong>95%</strong>
+                    <span>Risk Assessments Complete</span>
                 </div>
+            </div>            
+        </div>
+        <div class="hero-image">
+            <img src="../public/images/home.png" alt="Healthcare Professionals">
+        </div>
+    </section>
 
-                <div class="form-group">
-                    <label for="smoking">Do You Smoke?</label>
-                    <select id="smoking">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
+    <section class="services">
+        <div class="services-header">
+            <h2>We Offer a Wide Range of Unique Services</h2>
+            <p class="services-subtext">Journey to better health and wellbeing.  
+            Treatment for specific conditions, simply looking to improve, and  
+            reflects the tone you want to convey to you.</p>
+        </div>
+        <div class="service-cards">
+            <div class="card">
+                <h3>Breast Cancer Prediction</h3>
+                <p>Early detection can save lives! Our model analyzes key health metrics to estimate your risk of breast cancer.</p>
+                <img src="icon.png" alt="Virtual Consultation">
+                <a href="breast_cancer.html" class="card-arrow">➜</a>
+            </div>
+            <div class="card">
+                <h3>Heart Disease Prediction</h3>
+                <p>Your heart health matters! Using key lifestyle and medical factors, our tool predicts the likelihood of heart disease.</p>
+                <img src="icon.png" alt="Make Appointment">
+                <a href="heart-disease-prediction.html" class="card-arrow">➜</a>
+            </div>
+            <div class="card">
+                <h3>Diabetes Risk Prediction</h3>
+                <p>Stay ahead of diabetes! Get a personalized risk assessment based on factors like BMI, diet, and activity level.</p>
+                <img src="icon.png" alt="Online Pharmacy">
+                <a href="diabetes-risk-prediction.html" class="card-arrow">➜</a>
+            </div>
+        </div>        
+        <button class="see-more">See More</button>
+    </section>    
+
+    <section class="specialty">
+        <div class="specialty-left">
+            <div class="feature">
+                <img src="icon.png" alt="Icon">
+                <div>
+                    <h3>Accurate Risk Analysis</h3>
+                    <p>Reliable health assessments using medical data.</p>
                 </div>
-
-                <div class="form-group">
-                    <label for="exercise">Exercise Frequency (times per week):</label>
-                    <input type="number" id="exercise" required>
+            </div>
+            <div class="feature">
+                <img src="icon.png" alt="Icon">
+                <div>
+                    <h3>Fast & Secure</h3>
+                    <p>Get results quickly while keeping your data private</p>
                 </div>
-
-                <div class="form-group">
-                    <label for="menopause">Menopause Status:</label>
-                    <select id="menopause">
-                        <option value="0">Not Yet</option>
-                        <option value="1">Post-Menopause</option>
-                    </select>
+            </div>
+            <div class="feature">
+                <img src="icon.png" alt="Icon">
+                <div>
+                    <h3>Empower Your Health</h3>
+                    <p>Stay informed and take charge of your well-being.</p>
                 </div>
-
-                <button type="submit">Check Risk</button>
-            </form>
-            <div id="predictionResult"></div>
-        </section>
-
-        <!-- About Page -->
-        <section id="about" class="tab">
-            <h2>About This System</h2>
-            <p>This system provides medical risk assessments using machine learning models.</p>
-        </section>
-    </main>
-
-    <script src="js/script.js"></script>
+            </div>
+        </div>
+        <div class="specialty-right">
+            <h2>Why Choose NexusHealth?</h2>
+            <p>At NexusHealth, we believe in the power of data-driven healthcare. Our goal is to make early detection and risk assessment accessible to everyone, helping individuals take proactive steps toward a healthier future.</p>
+            <button class="learn-more">Learn More</button>
+        </div>
+    </section>
 </body>
 </html>

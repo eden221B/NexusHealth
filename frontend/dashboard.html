@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h2>Your Past Predictions</h2>
+    <ul id="predictionList"></ul>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const token = localStorage.getItem("token");
+            const response = await fetch("http://localhost:5113/predict/history", {
+                headers: { "Authorization": token }
+            });
+
+            const data = await response.json();
+            const list = document.getElementById("predictionList");
+            data.forEach(prediction => {
+                const item = document.createElement("li");
+                item.innerText = `Prediction: ${prediction.prediction}, Confidence: ${JSON.stringify(prediction.confidence)}`;
+                list.appendChild(item);
+            });
+        });
+    </script>
+</body>
+</html>

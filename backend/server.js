@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const predictRoutes = require("./routes/predict");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT || 5113;
@@ -21,6 +22,10 @@ app.use("/predict", predictRoutes);
 app.get("/", (req, res) => {
     res.send("Medical Assistance System API is running...");
 });
+
+
+app.use("/auth", authRoutes);
+
 
 // Start Server
 app.listen(PORT, () => {

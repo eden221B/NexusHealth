@@ -1,43 +1,57 @@
 const express = require("express");
-const router = express.Router();
+const jwt = require("jsonwebtoken");
 const { exec } = require("child_process");
+const Prediction = require("../models/Prediction");
+const User = require("../models/User");
 
-// Health Prediction API
-router.post("/breast-cancer", async (req, res) => {
-    console.log("Received request:", req.body);
+const router = express.Router();
+const SECRET_KEY = "your_secret_key";
 
-    let userInput = req.body.features;
+// Middleware to check authentication
+function authMiddleware(req, res, next) {
+    const token = req.header("Authorization");
+    if (!token) return res.status(401).json({ error: "Access denied. No token provided." });
+
+    try {
+        const verified = jwt.verify(token, SECRET_KEY);
+        req.user = verified;
+        next();
+    } catch (err) {
+        res.status(400).json({ error: "Invalid token" });
+    }
+}
+
+// Prediction Route (Now Saves Data)
+router.post("/breast-cancer", authMiddleware, async (req, res) => {
+    console.log("Authenticated request:", req.user);
+    const userInput = req.body.features;
+
     if (!userInput || !Array.isArray(userInput)) {
         return res.status(400).json({ error: "Invalid input. Expected an array of features." });
     }
 
-    // Convert features into a space-separated string for Python
-    let args = userInput.join(" ");
-    let pythonCommand = `/Users/spic/Desktop/NexusHealth/venv/bin/python3 /Users/spic/Desktop/NexusHealth/models/predict_breast_cancer.py ${args}`;
-
-    console.log("🚀 Running command:", pythonCommand); // Debugging log
-
-    exec(pythonCommand, (error, stdout, stderr) => {
-        console.log("🐍 Python script executed...");
-
-        if (error) {
-            console.error("🔥 Execution Error:", error);
-            return res.status(500).json({ error: error.message });
+    const pythonCommand = `/Users/spic/Desktop/NexusHealth/venv/bin/python3 /Users/spic/Desktop/NexusHealth/models/predict_breast_cancer.py ${userInput.join(" ")}`;
+    
+    exec(pythonCommand, async (err, stdout, stderr) => {
+        if (err) {
+            console.error("Python Error:", err);
+            return res.status(500).json({ error: "Error executing Python script" });
         }
-
-        if (stderr) {
-            console.error("⚠️ Python Script Error:", stderr);
-            return res.status(500).json({ error: stderr });
-        }
-
-        console.log("📊 Python Output:", stdout);
 
         try {
-            let predictionResult = JSON.parse(stdout.trim()); // Ensure JSON is clean
-            console.log("📈 Prediction:", predictionResult);
+            const predictionResult = JSON.parse(stdout);
+            console.log("Prediction Result:", predictionResult);
+
+            // Save prediction to database
+            await Prediction.create({
+                userId: req.user.userId,
+                prediction: predictionResult.prediction,
+                confidence: predictionResult.confidence
+            });
+
             return res.json(predictionResult);
         } catch (parseError) {
-            console.error("🚨 JSON Parsing Error:", parseError);
+            console.error("JSON Parsing Error:", parseError);
             return res.status(500).json({ error: "Failed to parse Python response." });
         }
     });
